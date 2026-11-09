@@ -6,25 +6,26 @@ You'll be building and deploying a simple HTTP service from scratch, scaling it,
 
 ### What You'll Need
 
-- Docker installed locally
-- Terraform CLI (v1.5+)
-- AWS CLI configured (credentials will be provided)
-- Git
-- A code editor of your choice
-- Screen Sharing
+- A GitHub account (the challenge runs in GitHub Codespaces, nothing to install)
+- The AWS credentials we give you at the start of the interview
+- Screen sharing
+
+The codespace comes with Docker, Terraform and the AWS CLI already installed.
 
 ### Getting Started
 
 1. **Fork** this repository to your own GitHub account.
-2. Clone your fork locally.
-3. Configure the provided AWS credentials:
+2. On your fork, click **Code → Codespaces → Create codespace on main**. It takes a minute or two to start.
+3. In the codespace terminal, configure the AWS credentials we give you:
    ```bash
    export AWS_ACCESS_KEY_ID=<provided>
    export AWS_SECRET_ACCESS_KEY=<provided>
    export AWS_DEFAULT_REGION=us-east-1
+   export TF_VAR_candidate=<your-name>
+   aws sts get-caller-identity   # should print the interview account
    ```
 4. Work through the milestones below **in order**.
-5. When finished, commit (if not commited after each milestone), open a **Pull Request** back to the original repo's `main` branch.
+5. Commit as you go and push to your fork when you're done.
 
 ## Milestones
 
@@ -46,8 +47,8 @@ Use Terraform to deploy your Docker container as a running service on AWS.
 - All infrastructure is defined in the `terraform/` directory
 - Push your Docker image to **ECR** (create the repo via Terraform)
 - Deploy the container so it is running on AWS (ECS Fargate, ECS on EC2, or EKS — your choice)
-- The service should be reachable (even if only from within the VPC for now, but prefferably publicly)
-- Access and show your deployed instace and page
+- The service should be reachable (even if only from within the VPC for now, but preferably publicly)
+- Access and show your deployed instance and page
 
 **Hints:**
 - The `terraform/` directory has starter files — use them as your starting point
@@ -78,8 +79,8 @@ Lock down the networking so that:
 - The ALB accepts inbound traffic **only on port 80**
 - The containers only accept traffic **from the ALB** (not directly from the internet)
 - All of this is expressed in Terraform via **security groups** and, if you'd like, a dedicated **VPC/subnet** setup
-- Show / proove that only traffic on port 80 is allowed
-- Commit your final changes and push your PR
+- Show or prove that only traffic on port 80 is allowed
+- Commit your final changes and push them to your fork
 
 ---
 
@@ -87,7 +88,7 @@ Lock down the networking so that:
 
 - **Time:** Don't worry if you don't finish everything, we care about your approach and reasoning as much as the end result.
 - **Searching is fine.** Use Documentation, Stack Overflow, Google, Coding Assistants, or just ask us. Whatever you'd normally use on the job. We're not testing memorization.
-- **Talk through your thinking.** Narrate your decisions throught. It helps us understand your thought process.
+- **Talk through your thinking.** Narrate your decisions throughout. It helps us understand your thought process.
 - **Ask questions.** If something is genuinely ambiguous, ask. We are here to help you put your best foot forward
 
 ## Repo Structure
@@ -103,9 +104,10 @@ Lock down the networking so that:
 │   ├── main.tf            // Your infrastructure (empty starter)
 │   ├── variables.tf       // Your variables (empty starter)
 │   └── outputs.tf         // Your outputs (empty starter)
+├── .devcontainer/         // Codespaces setup (Docker, Terraform, AWS CLI)
 └── .gitignore
 ```
 
 ## Cleanup
 
-Don't worry about tearing down infrastructure, we'll handle that after the interview is done
+At the end of the interview we'll ask you to run `terraform destroy` so the account is clean for the next person. Anything left over, we'll take care of.
